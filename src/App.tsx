@@ -1,25 +1,47 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
-import { LatLngExpression } from 'leaflet';
+import config from "./config.json";
 
-const centerS : LatLngExpression = [10.77, 107];
+import { GoogleMap, useLoadScript, Marker, Libraries } from '@react-google-maps/api';
 
-function App() {
+const API_KEY = config["API_KEY"];
+
+const libraries : Libraries = ['places'];
+const mapContainerStyle = {
+  width: '100vw',
+  height: '100vh',
+};
+const center = {
+  lat: 7.2905715, // default latitude
+  lng: 80.6337262, // default longitude
+};
+
+const App = () => {
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: API_KEY,
+    libraries,
+  });
+
+  if (loadError) {
+    return <div>Error loading maps</div>;
+  }
+
+  if (!isLoaded) {
+    return <div>Loading maps</div>;
+  }
+
   return (
-    <MapContainer center={centerS} zoom={10}>
-        <TileLayer
-    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  />
-  <Marker position={[51.505, -0.09]}>
-    <Popup>
-      A pretty CSS3 popup. <br /> Easily customizable.
-    </Popup>
-  </Marker>
-    </MapContainer>
+    <div>
+      <GoogleMap
+        mapContainerStyle={mapContainerStyle}
+        zoom={10}
+        center={center}
+      >
+        <Marker position={center} />
+      </GoogleMap>
+    </div>
   );
-}
+};
 
 export default App;
