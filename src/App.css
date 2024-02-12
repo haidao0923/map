@@ -1,38 +1,53 @@
 .App {
+  position: relative; /* Ensure relative positioning for absolute children */
+  text-align: center; /* Center children horizontally */
+  display: flex; /* Use flexbox for centering */
+  flex-direction: column;
+  justify-content: center; /* Center children horizontally */
+  align-items: center; /* Center children vertically */
+}
+
+.title-background {
+  position: absolute; /* Position the background absolutely within the relative container */
+  top: 0; /* Position it at the top */
+  left: 0; /* Position it at the left */
+  width: 100%; /* Take full width */
+  height: 10vh; /* Adjust height as needed */
+  object-fit: cover; /* Maintain aspect ratio */
+  z-index: -1;
+  padding: 0px;
+}
+
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-size: 4vh;
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.815);
+  border-radius: 50%;
+  width: fit-content; /* Adjust width to fit content */
+  height: fit-content;
   text-align: center;
+  margin: 1.5vh;
+  padding-left: 2vh;
+  padding-right: 2vh;
+  padding-bottom: 1vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.description {
+  color: yellow;
+  margin-bottom: 5px;
+  margin-left: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.dropdown-container {
   display: flex;
   flex-direction: column;
+  margin-top: -10px;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
