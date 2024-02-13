@@ -8,6 +8,10 @@ import { GoogleMap, useLoadScript, MarkerF, InfoWindowF, Libraries } from '@reac
 import catIcon from "./images/cat.png";
 import blackBearIcon from "./images/black_bear.png";
 import baldEagleIcon from "./images/bald_eagle.png";
+import batIcon from "./images/bat.png";
+import coyoteIcon from "./images/coyote.png"
+import whiteTailedDeerIcon from "./images/white_tailed_deer.png";
+import mosquitoesIcon from "./images/mosquitoes.png";
 
 const API_KEY = config["API_KEY"];
 
@@ -22,7 +26,7 @@ const center = {
 };
 
 const defaultIconSize = 15;
-const animalIcons = [blackBearIcon, baldEagleIcon];
+const animalIcons = [blackBearIcon, baldEagleIcon, batIcon, coyoteIcon, whiteTailedDeerIcon, mosquitoesIcon];
 
 class Animal {
   name: string;
@@ -54,9 +58,21 @@ class State {
         size = this.animals[0].population / 500;
         break;
     case 1:
-        size = this.animals[1].population / 50;
+        size = this.animals[1].population / 25;
+        break;
+    case 2:
+        size = this.animals[2].population * 2;
+        break;
+    case 3:
+        size = this.animals[3].population / 2000;
+        break;
+    case 4:
+        size = this.animals[4].population / 20000;
+        break;
+    case 5:
+        size = this.animals[5].population / 1.5;
     }
-    if (size < 15) {
+    if (size > 0 && size < 15) {
         size = 15;
     }
     return new google.maps.Size(size, size);
@@ -64,56 +80,106 @@ class State {
 }
 
 const states: State[] = [
-  new State("Alabama", 32.9329041158889, -86.74599405802701, [new Animal("Black Bear", 200), new Animal("Bald Eagle", 200)]),
-  new State("Alaska", 65.43439348836274, -151.7037371648322, [new Animal("Black Bear", 100000), new Animal("Bald Eagle", 30000)]),
-  new State("Arizona", 34, -111.71791783087505, [new Animal("Black Bear", 3000), new Animal("Bald Eagle", 74)]),
-  new State("Arkansas", 34.6402626258708, -92.46987099869386, [new Animal("Black Bear", 3000), new Animal("Bald Eagle", 1700)]),
-  new State("California", 36.428181637032054, -119.73793711707465, [new Animal("Black Bear", 30000), new Animal("Bald Eagle", 1400)]),
-  new State("Colorado", 38.79502836057431, -105.565574106714, [new Animal("Black Bear", 16000), new Animal("Bald Eagle", 1000)]),
-  new State("Connecticut", 41.48208391724883, -72.76039837963357, [new Animal("Black Bear", 900), new Animal("Bald Eagle", 100)]),
-  new State("Delaware", 38.279419572312804, -75.59487102397921, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 71)]),
-  new State("Florida", 27.29154567456515, -81.18691205012433, [new Animal("Black Bear", 4000), new Animal("Bald Eagle", 1500)]),
-  new State("Georgia", 32.637343588128005, -83.38417766589615, [new Animal("Black Bear", 5000), new Animal("Bald Eagle", 200)]),
-  new State("Hawaii", 19.547077528581216, -155.65881826790638, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 0)]),
-  new State("Idaho", 43.61842431551806, -114.31069125748577, [new Animal("Black Bear", 25000), new Animal("Bald Eagle", 650)]),
-  new State("Illinois", 40.11824580371417, -89.39369913661332, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 3100)]),
-  new State("Indiana", 40.01735399899324, -86.27358196221736, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 300)]),
-  new State("Iowa", 41.941354518188916, -93.52455849426433, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 4000)]),
-  new State("Kansas", 38.486106551340264, -98.18276163772073, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 1000)]),
-  new State("Kentucky", 37.446781579968224, -84.55971473632816, [new Animal("Black Bear", 1000), new Animal("Bald Eagle", 187)]),
-  new State("Louisiana", 30.456065264929062, -92.51381631100928, [new Animal("Black Bear", 850), new Animal("Bald Eagle", 358)]),
-  new State("Maine", 45.04853597164424, -69.15688276976783, [new Animal("Black Bear", 35000), new Animal("Bald Eagle", 733)]),
-  new State("Maryland", 38.88060346238936, -77.41860148506981, [new Animal("Black Bear", 2000), new Animal("Bald Eagle", 400)]),
-  new State("Massachusetts", 42.31615576368685, -71.92543744564031, [new Animal("Black Bear", 4500), new Animal("Bald Eagle", 76)]),
-  new State("Michigan", 43.49103280638285, -84.86733196812341, [new Animal("Black Bear", 17000), new Animal("Bald Eagle", 800)]),
-  new State("Minnesota", 46.98610165347082, -94.75502723909653, [new Animal("Black Bear", 13500), new Animal("Bald Eagle", 9800)]),
-  new State("Mississippi", 32.84064697153142, -89.62441201468808, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 100)]),
-  new State("Missouri", 38.348380871486626, -92.68959756027104, [new Animal("Black Bear", 1000), new Animal("Bald Eagle", 502)]),
-  new State("Montana", 47.046024889514186, -109.25698034121062, [new Animal("Black Bear", 15000), new Animal("Bald Eagle", 700)]),
-  new State("Nebraska", 41.3172639599389, -99.54506631949927, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 990)]),
-  new State("Nevada", 39.64614001655161, -116.88149186116227, [new Animal("Black Bear", 500), new Animal("Bald Eagle", 125)]),
-  new State("New Hampshire", 43.41127633666678, -71.61782025943225, [new Animal("Black Bear", 4900), new Animal("Bald Eagle", 500)]),
-  new State("New Jersey", 39.57843110564712, -74.54018352840875, [new Animal("Black Bear", 3000), new Animal("Bald Eagle", 220)]),
-  new State("New Mexico", 34.01254197871182, -106.04897254218379, [new Animal("Black Bear", 5500), new Animal("Bald Eagle", 100)]),
-  new State("New York", 42.89834554648099, -75.61684368013694, [new Animal("Black Bear", 7000), new Animal("Bald Eagle", 426)]),
-  new State("North Carolina", 35.40499478171519, -78.61611127967133, [new Animal("Black Bear", 20000), new Animal("Bald Eagle", 80)]),
-  new State("North Dakota", 47.43388738430602, -100.4679178781234, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 160)]),
-  new State("Ohio", 40.28606655282944, -82.67006630676441, [new Animal("Black Bear", 75), new Animal("Bald Eagle", 707)]),
-  new State("Oklahoma", 35.39603977709561, -96.95229289288854, [new Animal("Black Bear", 2500), new Animal("Bald Eagle", 2000)]),
-  new State("Oregon", 43.93572461347163, -120.79262465538007, [new Animal("Black Bear", 27500), new Animal("Bald Eagle", 570)]),
-  new State("Pennsylvania", 40.88677719440607, -77.88002726438188, [new Animal("Black Bear", 16000), new Animal("Bald Eagle", 300)]),
-  new State("Rhode Island", 41.45738756601491, -71.34316205746077, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 3)]),
-  new State("South Carolina", 33.70405592050206, -80.5277323653928, [new Animal("Black Bear", 1100), new Animal("Bald Eagle", 440)]),
-  new State("South Dakota", 44.439901938409044, -100.2042460042308, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 145)]),
-  new State("Tennessee", 35.63748060045357, -86.06484171713775, [new Animal("Black Bear", 5750), new Animal("Bald Eagle", 175)]),
-  new State("Texas", 30.871870080299136, -98.66616007319054, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 160)]),
-  new State("Utah", 39.10261700079595, -111.58608189392874, [new Animal("Black Bear", 4000), new Animal("Bald Eagle", 10)]),
-  new State("Vermont", 44.10952194461634, -72.67250775500271, [new Animal("Black Bear", 5250), new Animal("Bald Eagle", 68)]),
-  new State("Virginia", 37.32457048580553, -78.51723429295572, [new Animal("Black Bear", 19000), new Animal("Bald Eagle", 1100)]),
-  new State("Washington", 47.49330662463946, -120.22133558330367, [new Animal("Black Bear", 27500), new Animal("Bald Eagle", 900)]),
-  new State("West Virginia", 38.50330374469548, -80.84633584567383, [new Animal("Black Bear", 13000), new Animal("Bald Eagle", 225)]),
-  new State("Wisconsin", 44.18835234427443, -89.52553507355964, [new Animal("Black Bear", 24000), new Animal("Bald Eagle", 1500)]),
-  new State("Wyoming", 43.075151136132966, -107.45522253627774, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 185)]),
+  new State("Alabama", 32.9, -86.7, [new Animal("Black Bear", 200), new Animal("Bald Eagle", 200), new Animal("Bat Species", 16),
+      new Animal("Coyote", 52400), new Animal("White-tailed Deer", 1750000), new Animal("Mosquitoes Species", 60)]),
+  new State("Alaska", 65.4, -151.7, [new Animal("Black Bear", 100000), new Animal("Bald Eagle", 30000), new Animal("Bat Species", 7),
+      new Animal("Coyote", 0), new Animal("White-tailed Deer", 0), new Animal("Mosquitoes Species", 30)]),
+  new State("Arizona", 34, -111.7, [new Animal("Black Bear", 3000), new Animal("Bald Eagle", 74), new Animal("Bat Species", 28),
+      new Animal("Coyote", 200000), new Animal("White-tailed Deer", 55000), new Animal("Mosquitoes Species", 40)]),
+  new State("Arkansas", 34.6, -92.4, [new Animal("Black Bear", 3000), new Animal("Bald Eagle", 1700), new Animal("Bat Species", 16),
+      new Animal("Coyote", 106360), new Animal("White-tailed Deer", 900000), new Animal("Mosquitoes Species", 55)]),
+  new State("California", 36.4, -119.7, [new Animal("Black Bear", 30000), new Animal("Bald Eagle", 1400), new Animal("Bat Species", 25),
+      new Animal("Coyote", 250000), new Animal("White-tailed Deer", 0), new Animal("Mosquitoes Species", 50)]),
+  new State("Colorado", 38.7, -105.5, [new Animal("Black Bear", 16000), new Animal("Bald Eagle", 1000), new Animal("Bat Species", 18),
+      new Animal("Coyote", 78252), new Animal("White-tailed Deer", 427500), new Animal("Mosquitoes Species", 45)]),
+  new State("Connecticut", 41.4, -72.7, [new Animal("Black Bear", 900), new Animal("Bald Eagle", 100), new Animal("Bat Species", 9),
+      new Animal("Coyote", 3000), new Animal("White-tailed Deer", 101000), new Animal("Mosquitoes Species", 54)]),
+  new State("Delaware", 38.2, -75.5, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 71), new Animal("Bat Species", 9),
+      new Animal("Coyote", 50), new Animal("White-tailed Deer", 45000), new Animal("Mosquitoes Species", 57)]),
+  new State("Florida", 27.2, -81.1, [new Animal("Black Bear", 4000), new Animal("Bald Eagle", 1500), new Animal("Bat Species", 13),
+      new Animal("Coyote", 13000), new Animal("White-tailed Deer", 625800), new Animal("Mosquitoes Species", 80)]),
+  new State("Georgia", 32.6, -83.3, [new Animal("Black Bear", 5000), new Animal("Bald Eagle", 200), new Animal("Bat Species", 16),
+      new Animal("Coyote", 90000), new Animal("White-tailed Deer", 1270000), new Animal("Mosquitoes Species", 63)]),
+  new State("Hawaii", 19.5, -155.6, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 0), new Animal("Bat Species", 1),
+      new Animal("Coyote", 0), new Animal("White-tailed Deer", 0), new Animal("Mosquitoes Species", 8)]),
+  new State("Idaho", 43.6, -114.3, [new Animal("Black Bear", 25000), new Animal("Bald Eagle", 650), new Animal("Bat Species", 14),
+      new Animal("Coyote", 52000), new Animal("White-tailed Deer", 520000), new Animal("Mosquitoes Species", 50)]),
+  new State("Illinois", 40.1, -89.4, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 3100), new Animal("Bat Species", 13),
+      new Animal("Coyote", 30000), new Animal("White-tailed Deer", 660000), new Animal("Mosquitoes Species", 52)]),
+  new State("Indiana", 40.0, -86.27, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 300), new Animal("Bat Species", 13),
+      new Animal("Coyote", 12000), new Animal("White-tailed Deer", 680000), new Animal("Mosquitoes Species", 55)]),
+  new State("Iowa", 41.9, -93.5, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 4000), new Animal("Bat Species", 9),
+      new Animal("Coyote", 150000), new Animal("White-tailed Deer", 445000), new Animal("Mosquitoes Species", 57)]),
+  new State("Kansas", 38.5, -98.2, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 1000), new Animal("Bat Species", 15),
+      new Animal("Coyote", 150000), new Animal("White-tailed Deer", 646000), new Animal("Mosquitoes Species", 2)]),
+  new State("Kentucky", 37.4, -84.55, [new Animal("Black Bear", 1000), new Animal("Bald Eagle", 187), new Animal("Bat Species", 16),
+      new Animal("Coyote", 20200), new Animal("White-tailed Deer", 950000), new Animal("Mosquitoes Species", 60)]),
+  new State("Louisiana", 30.45, -92.5, [new Animal("Black Bear", 850), new Animal("Bald Eagle", 358), new Animal("Bat Species", 12),
+      new Animal("Coyote", 52370), new Animal("White-tailed Deer", 500000), new Animal("Mosquitoes Species", 68)]),
+  new State("Maine", 45.0, -69.1, [new Animal("Black Bear", 35000), new Animal("Bald Eagle", 733), new Animal("Bat Species", 8),
+      new Animal("Coyote", 15000), new Animal("White-tailed Deer", 290000), new Animal("Mosquitoes Species", 45)]),
+  new State("Maryland", 38.8, -77.4, [new Animal("Black Bear", 2000), new Animal("Bald Eagle", 400), new Animal("Bat Species", 10),
+      new Animal("Coyote", 0), new Animal("White-tailed Deer", 207000), new Animal("Mosquitoes Species", 50)]),
+  new State("Massachusetts", 42.3, -71.9, [new Animal("Black Bear", 4500), new Animal("Bald Eagle", 76), new Animal("Bat Species", 9),
+      new Animal("Coyote", 12000), new Animal("White-tailed Deer", 95000), new Animal("Mosquitoes Species", 51)]),
+  new State("Michigan", 43.5, -84.9, [new Animal("Black Bear", 17000), new Animal("Bald Eagle", 800), new Animal("Bat Species", 9),
+      new Animal("Coyote", 0), new Animal("White-tailed Deer", 1850000), new Animal("Mosquitoes Species", 55)]),
+  new State("Minnesota", 47, -94.8, [new Animal("Black Bear", 13500), new Animal("Bald Eagle", 9800), new Animal("Bat Species", 8),
+      new Animal("Coyote", 14490), new Animal("White-tailed Deer", 950000), new Animal("Mosquitoes Species", 50)]),
+  new State("Mississippi", 32.8, -89.6, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 100), new Animal("Bat Species", 15),
+      new Animal("Coyote", 32612), new Animal("White-tailed Deer", 1750000), new Animal("Mosquitoes Species", 50)]),
+  new State("Missouri", 38.3, -92.7, [new Animal("Black Bear", 1000), new Animal("Bald Eagle", 502), new Animal("Bat Species", 14),
+      new Animal("Coyote", 0), new Animal("White-tailed Deer", 1400000), new Animal("Mosquitoes Species", 50)]),
+  new State("Montana", 47.0, -109.2, [new Animal("Black Bear", 15000), new Animal("Bald Eagle", 700), new Animal("Bat Species", 15),
+      new Animal("Coyote", 0), new Animal("White-tailed Deer", 212814), new Animal("Mosquitoes Species", 50)]),
+  new State("Nebraska", 41.3, -99.5, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 990), new Animal("Bat Species", 13),
+      new Animal("Coyote", 77345), new Animal("White-tailed Deer", 300000), new Animal("Mosquitoes Species", 50)]),
+  new State("Nevada", 39.6, -116.9, [new Animal("Black Bear", 500), new Animal("Bald Eagle", 125), new Animal("Bat Species", 23),
+      new Animal("Coyote", 55000), new Animal("White-tailed Deer", 0), new Animal("Mosquitoes Species", 40)]),
+  new State("New Hampshire", 43.4, -71.6, [new Animal("Black Bear", 4900), new Animal("Bald Eagle", 500), new Animal("Bat Species", 8),
+      new Animal("Coyote", 4500), new Animal("White-tailed Deer", 100000), new Animal("Mosquitoes Species", 43)]),
+  new State("New Jersey", 39.6, -74.5, [new Animal("Black Bear", 3000), new Animal("Bald Eagle", 220), new Animal("Bat Species", 9),
+      new Animal("Coyote", 4000), new Animal("White-tailed Deer", 125000), new Animal("Mosquitoes Species", 60)]),
+  new State("New Mexico", 34.0, -106.0, [new Animal("Black Bear", 5500), new Animal("Bald Eagle", 100), new Animal("Bat Species", 24),
+      new Animal("Coyote", 125000), new Animal("White-tailed Deer", 0), new Animal("Mosquitoes Species", 57)]),
+  new State("New York", 42.9, -75.6, [new Animal("Black Bear", 7000), new Animal("Bald Eagle", 426), new Animal("Bat Species", 9),
+      new Animal("Coyote", 20000), new Animal("White-tailed Deer", 1200000), new Animal("Mosquitoes Species", 70)]),
+  new State("North Carolina", 35.4, -78.6, [new Animal("Black Bear", 20000), new Animal("Bald Eagle", 80), new Animal("Bat Species", 17),
+      new Animal("Coyote", 51905), new Animal("White-tailed Deer", 1000000), new Animal("Mosquitoes Species", 60)]),
+  new State("North Dakota", 47.4, -100.4, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 160), new Animal("Bat Species", 11),
+      new Animal("Coyote", 0), new Animal("White-tailed Deer", 135000), new Animal("Mosquitoes Species", 38)]),
+  new State("Ohio", 40.3, -82.7, [new Animal("Black Bear", 75), new Animal("Bald Eagle", 707), new Animal("Bat Species", 11),
+      new Animal("Coyote", 0), new Animal("White-tailed Deer", 725000), new Animal("Mosquitoes Species", 59)]),
+  new State("Oklahoma", 35.4, -96.9, [new Animal("Black Bear", 2500), new Animal("Bald Eagle", 2000), new Animal("Bat Species", 24),
+      new Animal("Coyote", 768), new Animal("White-tailed Deer", 750000), new Animal("Mosquitoes Species", 60)]),
+  new State("Oregon", 43.9, -120.8, [new Animal("Black Bear", 27500), new Animal("Bald Eagle", 570), new Animal("Bat Species", 15),
+      new Animal("Coyote", 83695), new Animal("White-tailed Deer", 0), new Animal("Mosquitoes Species", 50)]),
+  new State("Pennsylvania", 40.9, -77.9, [new Animal("Black Bear", 16000), new Animal("Bald Eagle", 300), new Animal("Bat Species", 9),
+      new Animal("Coyote", 100000), new Animal("White-tailed Deer", 1450000), new Animal("Mosquitoes Species", 60)]),
+  new State("Rhode Island", 41.45, -71.3, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 3), new Animal("Bat Species", 8),
+      new Animal("Coyote", 3642), new Animal("White-tailed Deer", 18000), new Animal("Mosquitoes Species", 46)]),
+  new State("South Carolina", 33.7, -80.5, [new Animal("Black Bear", 1100), new Animal("Bald Eagle", 440), new Animal("Bat Species", 14),
+      new Animal("Coyote", 0), new Animal("White-tailed Deer", 730000), new Animal("Mosquitoes Species", 61)]),
+  new State("South Dakota", 44.44, -100.2, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 145), new Animal("Bat Species", 11),
+      new Animal("Coyote", 70000), new Animal("White-tailed Deer", 425000), new Animal("Mosquitoes Species", 43)]),
+  new State("Tennessee", 35.64, -86.1, [new Animal("Black Bear", 5750), new Animal("Bald Eagle", 175), new Animal("Bat Species", 16),
+      new Animal("Coyote", 38202), new Animal("White-tailed Deer", 900000), new Animal("Mosquitoes Species", 9)]),
+  new State("Texas", 30.9, -98.6, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 160), new Animal("Bat Species", 32),
+      new Animal("Coyote", 859510), new Animal("White-tailed Deer", 5300000), new Animal("Mosquitoes Species", 85)]),
+  new State("Utah", 39.1, -111.6, [new Animal("Black Bear", 4000), new Animal("Bald Eagle", 10), new Animal("Bat Species", 18),
+      new Animal("Coyote", 0), new Animal("White-tailed Deer", 1000), new Animal("Mosquitoes Species", 50)]),
+  new State("Vermont", 44.1, -72.7, [new Animal("Black Bear", 5250), new Animal("Bald Eagle", 68), new Animal("Bat Species", 9),
+      new Animal("Coyote", 1000), new Animal("White-tailed Deer", 133000), new Animal("Mosquitoes Species", 45)]),
+  new State("Virginia", 37.3, -78.5, [new Animal("Black Bear", 19000), new Animal("Bald Eagle", 1100), new Animal("Bat Species", 17),
+      new Animal("Coyote", 50000), new Animal("White-tailed Deer", 925000), new Animal("Mosquitoes Species", 50)]),
+  new State("Washington", 47.5, -120.2, [new Animal("Black Bear", 27500), new Animal("Bald Eagle", 900), new Animal("Bat Species", 15),
+      new Animal("Coyote", 50000), new Animal("White-tailed Deer", 100000), new Animal("Mosquitoes Species", 40)]),
+  new State("West Virginia", 38.5, -80.8, [new Animal("Black Bear", 13000), new Animal("Bald Eagle", 225), new Animal("Bat Species", 14),
+      new Animal("Coyote", 11000), new Animal("White-tailed Deer", 550000), new Animal("Mosquitoes Species", 26)]),
+  new State("Wisconsin", 44.2, -89.5, [new Animal("Black Bear", 24000), new Animal("Bald Eagle", 1500), new Animal("Bat Species", 8),
+      new Animal("Coyote", 17000), new Animal("White-tailed Deer", 1600000), new Animal("Mosquitoes Species", 56)]),
+  new State("Wyoming", 43.1, -107.4, [new Animal("Black Bear", 0), new Animal("Bald Eagle", 185), new Animal("Bat Species", 18),
+      new Animal("Coyote", 86000), new Animal("White-tailed Deer", 72900), new Animal("Mosquitoes Species", 45)]),
 ]
 
 const App = () => {
@@ -147,7 +213,12 @@ const App = () => {
             <select id="dropdown" value={selectedAnimal} onChange={handleDropdownChange}>
                 <option value={0}>Black Bear</option>
                 <option value={1}>Bald Eagle</option>
-                <option value={2}>Option 3</option>
+                <option value={2}>Bat Species</option>
+                <option value={3}>Coyote</option>
+                <option value={4}>White-tailed Deer</option>
+                <option value={5}>Mosquitoes Species</option>
+                <option value={6}>Bat</option>
+
             </select>
         </div>
         <p className='description'>By: Hai Dao</p>
