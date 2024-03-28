@@ -13,6 +13,9 @@ import coyoteIcon from "./images/coyote.png"
 import whiteTailedDeerIcon from "./images/white_tailed_deer.png";
 import mosquitoesIcon from "./images/mosquitoes.png";
 
+
+import ReactSlider from 'react-slider';
+
 const API_KEY = config["API_KEY"];
 
 const libraries : Libraries = ['places'];
@@ -182,6 +185,34 @@ const states: State[] = [
       new Animal("Coyote", 86000), new Animal("White-tailed Deer", 72900), new Animal("Mosquitoes Species", 45)]),
 ]
 
+class BirdConservativeRegion {
+    id: number;
+    // Population from 1967-2014
+    goldenEaglePopulations: number[];
+    constructor(id: number, goldenEaglePopulations: number[]) {
+        this.id = id;
+        this.goldenEaglePopulations = goldenEaglePopulations;
+    }
+
+    getCoordinate() {
+        switch(this.id) {
+        case 5:
+            return {lat: 20, lng: 30}
+        case 9:
+            return {lat: 20, lng: 30}
+        default:
+            return {lat: 20, lng: 30}
+        }
+    }
+}
+
+
+const birdConservativeRegions = [
+    new BirdConservativeRegion(5, []),
+    new BirdConservativeRegion(6, []),
+
+]
+
 const App = () => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: API_KEY,
@@ -190,6 +221,12 @@ const App = () => {
 
   const [hoverState, setHoverState] = useState("");
   const [selectedAnimal, setSelectedAnimal] = useState(0);
+  const [isSoaring, setIsSoaring] = useState(false);
+  const [selectedYear, setSelectedYear] = useState(1967);
+
+  const timeline = [{
+    title: 1960
+  }, {title: 1961}, {title: 1962}]
 
   const handleDropdownChange = (e: any) => {
     setSelectedAnimal(Number(e.target.value));
@@ -209,20 +246,30 @@ const App = () => {
       <div className='title-container'>
         <p className='title'>AniMap</p>
         <div className='dropdown-container'>
-            <p className='description'>Choose an animal</p>
-            <select id="dropdown" value={selectedAnimal} onChange={handleDropdownChange}>
-                <option value={0}>Black Bear</option>
-                <option value={1}>Bald Eagle</option>
-                <option value={2}>Bat Species</option>
-                <option value={3}>Coyote</option>
-                <option value={4}>White-tailed Deer</option>
-                <option value={5}>Mosquitoes Species</option>
-                <option value={6}>Bat</option>
+            {!isSoaring ? <>
+                <p className='description'>Choose an animal</p>
+                <select id="dropdown" value={selectedAnimal} onChange={handleDropdownChange}>
+                    <option value={0}>Black Bear</option>
+                    <option value={1}>Bald Eagle</option>
+                    <option value={2}>Bat Species</option>
+                    <option value={3}>Coyote</option>
+                    <option value={4}>White-tailed Deer</option>
+                    <option value={5}>Mosquitoes Species</option>
+                    <option value={6}>Bat</option>
+                </select>
+                <button onClick={() => setIsSoaring(!isSoaring)}className='soaring-button'>{isSoaring ? "Return to normal" : `Click to Soar through time`}</button>
 
-            </select>
+            </> : <>
+                <h2 className='soar-prompt'>View the population of Golden Eagle through time</h2>
+                <p className='description'>{`Current Year: ${selectedYear}`}</p>
+                <input type="range" min="1967" max="2014" value={selectedYear} className="slider" onChange={(e) => setSelectedYear(Number(e.target.value))}/>
+                <button onClick={() => setIsSoaring(!isSoaring)}className='soaring-button'>{isSoaring ? "Return to normal" : `Click to Soar through time`}</button>
+
+            </>}
         </div>
         <p className='description'>By: Hai Dao</p>
       </div>
+
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={5}
