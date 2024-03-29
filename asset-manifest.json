@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/map/static/css/main.b091d58e.css",
-    "main.js": "/map/static/js/main.34f36711.js",
+    "main.css": "/map/static/css/main.50d4af33.css",
+    "main.js": "/map/static/js/main.ccde86a6.js",
     "static/js/592.cefaac32.chunk.js": "/map/static/js/592.cefaac32.chunk.js",
     "static/media/bald_eagle.png": "/map/static/media/bald_eagle.481bf1d2fb2b963e27ba.png",
+    "static/media/golden_eagle.png": "/map/static/media/golden_eagle.a0f9a7594c9e2ec76444.png",
     "static/media/black_bear.png": "/map/static/media/black_bear.ca65bf0c6cf34a43af3c.png",
     "static/media/coyote.png": "/map/static/media/coyote.9a97064ac77d74033cce.png",
-    "static/media/mosquitoes.png": "/map/static/media/mosquitoes.e145dce0c1eb562fa42f.png",
     "static/media/white_tailed_deer.png": "/map/static/media/white_tailed_deer.1dbf8b40fc9243c3145c.png",
     "static/media/title.png": "/map/static/media/title.96e7d42466d86313c050.png",
-    "static/media/bat.png": "/map/static/media/bat.e1aba6db13bf122f1564.png",
+    "static/media/soaring.png": "/map/static/media/soaring.46fe3ffcae195710af1e.png",
     "index.html": "/map/index.html",
-    "main.b091d58e.css.map": "/map/static/css/main.b091d58e.css.map",
-    "main.34f36711.js.map": "/map/static/js/main.34f36711.js.map",
+    "main.50d4af33.css.map": "/map/static/css/main.50d4af33.css.map",
+    "main.ccde86a6.js.map": "/map/static/js/main.ccde86a6.js.map",
     "592.cefaac32.chunk.js.map": "/map/static/js/592.cefaac32.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b091d58e.css",
-    "static/js/main.34f36711.js"
+    "static/css/main.50d4af33.css",
+    "static/js/main.ccde86a6.js"
   ]
 }
