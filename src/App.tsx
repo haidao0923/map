@@ -12,9 +12,7 @@ import batIcon from "./images/bat.png";
 import coyoteIcon from "./images/coyote.png"
 import whiteTailedDeerIcon from "./images/white_tailed_deer.png";
 import mosquitoesIcon from "./images/mosquitoes.png";
-
-
-import ReactSlider from 'react-slider';
+import goldenEagleIcon from "./images/golden_eagle.png";
 
 const API_KEY = config["API_KEY"];
 
@@ -197,19 +195,78 @@ class BirdConservativeRegion {
     getCoordinate() {
         switch(this.id) {
         case 5:
-            return {lat: 20, lng: 30}
+            return {lat: 45.87251446033815, lng: -123.42801397225281}
         case 9:
-            return {lat: 20, lng: 30}
+            return {lat: 42.42384175783776, lng: -117.69437045566171}
+        case 10:
+            return {lat: 47.176446937274235, lng: -115.74816185925934}
+        case 11:
+            return {lat: 48.62527842598538, lng: -108.73324272321301}
+        case 15:
+            return {lat: 41.07503177510394, lng: -116.43513150456138}
+        case 16:
+            return {lat: 40.50487376162985, lng: -114.0145183426682}
+        case 17:
+            return {lat: 43.1942771891128, lng: -107.81878886205334}
+        case 18:
+            return {lat: 38.331555394437096, lng: -107.87494238562378}
+        case 32:
+            return {lat: 37.09758057121404, lng: -122.32279348150848}
+        case 33:
+            return {lat: 34.63325266284643, lng: -116.13678206778145}
+        case 34:
+            return {lat: 33.99079988477528, lng: -111.69413223753337}
+        case 35:
+            return {lat: 31.548683409608223, lng: -106.53015749216124}
         default:
             return {lat: 20, lng: 30}
         }
+    }
+
+    getIconSize(selectedYear: number) : google.maps.Size {
+        let size = this.goldenEaglePopulations[selectedYear - 1967] / 100;
+        if (size > 0 && size < 15) {
+            size = 15
+        }
+        return new google.maps.Size(size, size);
     }
 }
 
 
 const birdConservativeRegions = [
-    new BirdConservativeRegion(5, []),
-    new BirdConservativeRegion(6, []),
+    new BirdConservativeRegion(5, [467,593,424,414,411,370,385,355,408,420,372,341,
+                                   361,424,361,329,326,362,359,312,310,308,322,384,
+                                   424,412,314,429,316,336,314,431,336,406,402,335,
+                                   407,355,382,402,445,349,363,386,395,374,399,438]),
+    new BirdConservativeRegion(9, [9630,8938,9418,9418,9834,9308,9360,9198,9252,9622,8631,8882,
+                                   8708,8800,9210,9855,9252,8179,8238,8482,8463,8419,9016,8671,
+                                   8995,8653,10308,9266,10233,8673,7887,8981,8748,8294,8762,8780,
+                                   9278,8393,9931,7487,8394,7871,8149,8062,8989,8603,9746,9011]),
+    new BirdConservativeRegion(10, [8052,8034,7921,7936,7974,7875,7929,7818,7802,7834,7980,8041,
+                                    7988,7829,7936,7817,7847,7836,7818,7994,8001,7942,7925,7849,
+                                    8254,8092,8039,7856,7855,8147,8045,7771,7968,8170,8266,7936,
+                                    8453,8241,8090,8574,8341,8855,8569,9097,9097,9097,9097,9097]),
+    new BirdConservativeRegion(11, [515,530,519,505,574,519,680,543,564,641,606,636,
+                                    556,787,685,642,637,738,734,723,743,671,850,724,
+                                    861,786,1141,1207,1340,1172,1027,1010,1762,1320,1174,1782,
+                                    1388,1730,1382,1439,1321,1391,1674,1649,1742,1491,2013,1812]),
+    new BirdConservativeRegion(15, [457,436,421,396,374,346,364,321,326,301,288,277,
+                                    300,258,246,256,230,225,270,216,238,201,235,201,
+                                    190,187,183,182,176,188,179,189,184,171,183,167,
+                                    166,172,165,182,169,171,170,167,185,167,170,170]),
+    new BirdConservativeRegion(16, [10818,10671,10210,10055,9710,9850,9697,9172,9248,9172,8672,9021,
+                                    8501,8443,8464,8209,8070,7671,7746,7690,7307,7467,6919,7216,
+                                    7117,6622,6581,6857,6216,7117,6450,5992,6078,5854,5864,5740,
+                                    5586,5398,5534,5673,5173,4737,4817,4876,4800,5632,6087,5924]),
+    new BirdConservativeRegion(17, [16393,16106,15987,16045,15775,15741,15708,15790,16056,16016,15295,15545,
+                                    15696,16033,15230,14820,15535,14790,15166,14551,14258,14721,14632,14627,
+                                    15088,14955,15041,14128,14389,14102,14307,14044,15005,14118,15362,14053,
+                                    14323,14447,14494,15384,15118,13728,12879,14403,15633,13183,17214,14675]),
+    new BirdConservativeRegion(18, [2303,2208,2194]),
+    new BirdConservativeRegion(32, [1551,1499,1506]),
+    new BirdConservativeRegion(33, [2285,2133,2159]),
+    new BirdConservativeRegion(34, [3030,2793,2790]),
+    new BirdConservativeRegion(35, [1853,2037,1875]),
 
 ]
 
@@ -242,7 +299,7 @@ const App = () => {
 
   return (
     <div className='App'>
-      <img className='title-background' src={require("./images/title.png")}></img>
+      {<img className={`title-background ${isSoaring ? 'soaring' : ''}`} src={require(isSoaring ? "./images/soaring.png" : "./images/title.png")}></img>}
       <div className='title-container'>
         <p className='title'>AniMap</p>
         <div className='dropdown-container'>
@@ -260,7 +317,7 @@ const App = () => {
                 <button onClick={() => setIsSoaring(!isSoaring)}className='soaring-button'>{isSoaring ? "Return to normal" : `Click to Soar through time`}</button>
 
             </> : <>
-                <h2 className='soar-prompt'>View the population of Golden Eagle through time</h2>
+                <h3 className='soar-prompt'>View the population of Golden Eagle in Bird Conservative Region in the Pacific and Central Flyway from 1967-2014</h3>
                 <p className='description'>{`Current Year: ${selectedYear}`}</p>
                 <input type="range" min="1967" max="2014" value={selectedYear} className="slider" onChange={(e) => setSelectedYear(Number(e.target.value))}/>
                 <button onClick={() => setIsSoaring(!isSoaring)}className='soaring-button'>{isSoaring ? "Return to normal" : `Click to Soar through time`}</button>
@@ -275,7 +332,7 @@ const App = () => {
         zoom={5}
         center={center}
       >
-        {states.map((state, index) => (
+        {!isSoaring ? states.map((state, index) => (
           <MarkerF
               position={{lat: state.lat, lng: state.lng}}
               onMouseOver={() => setHoverState(state.name)}
@@ -289,6 +346,21 @@ const App = () => {
                     </InfoWindowF>
                 )}
           </MarkerF>
+        )) :
+        birdConservativeRegions.map((region, index) => (
+            <MarkerF
+                position={region.getCoordinate()}
+                onMouseOver={() => setHoverState(String(region.id))}
+                onMouseOut={() => setHoverState("")}
+                icon={{
+                url:goldenEagleIcon,
+                scaledSize: region.getIconSize(selectedYear)}}>
+                {hoverState == String(region.id) && (
+                    <InfoWindowF>
+                        <h4>{`${region.id}`}<br></br><br></br>{`Golden Eagle Population: ${region.goldenEaglePopulations[selectedYear - 1967]}`}</h4>
+                    </InfoWindowF>
+                )}
+            </MarkerF>
         ))}
       </GoogleMap>
     </div>

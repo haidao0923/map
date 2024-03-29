@@ -18,6 +18,11 @@
   padding: 0px;
 }
 
+.soaring {
+  object-fit: cover;
+  height: 15vh
+}
+
 .title-container {
   display: flex;
   justify-content: center;
